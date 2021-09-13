@@ -35,6 +35,6 @@ yarn-error.log*
 *.json.gz
 !package.json
 !package-lock.json
-test/*.root
-test/*.json.gz
+!test/*.root
+!test/*.json.gz
 
