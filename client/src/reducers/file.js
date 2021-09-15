@@ -3,7 +3,6 @@ import { actionTypes } from "../actions/file"
 const initialState = { files: [], selectedFile: null }
 
 const reducer = (state = initialState, action) => {
-    console.log("REDUCER", state)
     switch (action.type) {
         case actionTypes.SET_FILE:
             const file = action.payload
