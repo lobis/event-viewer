@@ -1,23 +1,34 @@
 
 import * as THREE from "three"
+import * as api from "./api"
 import { useState, useEffect } from "react"
 import { useThree } from '@react-three/fiber'
 
-const Geometry = ({ file }) => {
+import { useDispatch, useSelector } from "react-redux"
 
-    const [model, setModel] = useState(undefined)
+const Geometry = () => {
 
-    const loadModel = (file) => {
-        const url = `http://localhost:5000/geometry?file=${file}`
-        const loader = new THREE.ObjectLoader();
-        fetch(url).then(response => response.json()).then(json => loader.parse(json)).then(object => {
+    const file = useSelector((state) => state.file.selectedFile)
+
+    const [model, setModel] = useState()
+
+    const loadModel = async (file) => {
+        if (!file) {
+            setModel(null)
+            return
+        }
+
+        const loader = new THREE.ObjectLoader()
+
+        api.fetchGeometryForFile(file).then(response => response.data).then(json =>
+            loader.parse(json)
+        ).then(object => {
             setModel(object)
             console.log("Geometry loaded!")
         })
     }
 
     useEffect(() => {
-        if (!file) return
         loadModel(file)
     }, [file])
 
