@@ -7,7 +7,7 @@ import ReactDOM from "react-dom"
 import { Canvas } from "@react-three/fiber"
 import { OrbitControls } from "@react-three/drei"
 
-import React, { useEffect, useState } from "react"
+import React from "react"
 
 import reducers from "./reducers"
 

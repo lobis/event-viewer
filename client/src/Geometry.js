@@ -2,9 +2,8 @@
 import * as THREE from "three"
 import * as api from "./api"
 import { useState, useEffect } from "react"
-import { useThree } from '@react-three/fiber'
 
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 
 const Geometry = () => {
 
