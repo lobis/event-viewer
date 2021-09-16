@@ -105,6 +105,20 @@ export const getEventFromFile = async (filepath, eventIndex = undefined, eventID
     return events[eventID]
 }
 
+export const getAvailableEventIDsFromFile = async (filepath) => {
+    console.log('getAvailableEventIDsFromFile', filepath)
+
+    if (!cache[filepath]) {
+        console.log(`file '${filepath}' not in cache, processing...`)
+        await processFile(filepath)
+    }
+
+    const events = cache[filepath]
+
+    const eventIDs = Object.keys(events).map(id => parseInt(id))
+
+    return eventIDs
+}
 
 const buildGeometry = (obj) => {
     console.log("Starting to export geometry: ", obj)

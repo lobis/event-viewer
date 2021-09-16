@@ -30,7 +30,7 @@ export const getAvailableFiles = async (req, res) => {
 
 // Events
 
-import { getEventFromFile } from "../jsroot/index.js"
+import { getEventFromFile, getAvailableEventIDsFromFile } from "../jsroot/index.js"
 
 export const getEvent = async (req, res) => {
     const file = getFilePathInServer(req.query.file)
@@ -52,12 +52,43 @@ export const getEvent = async (req, res) => {
 
         console.log("calling 'getEventFromFile'")
         let response = await getEventFromFile(file, eventIndex, eventID)
-
+        if (!response) {
+            res.status(404).json({ message: `event not found in '${file}'` })
+            return
+        }
+        
         res.status(200).json(response)
 
     } catch (error) {
         console.error(`Failed to get event (index: ${eventIndex} / eventID: ${eventID}) for file ${file}`)
         console.error("getEvent", error.message)
+        res.status(404).json({ message: error.message })
+    }
+}
+
+export const getAvailableEventIDs = async (req, res) => {
+    const file = getFilePathInServer(req.query.file)
+    try {
+        console.log(`controllers - event.js - getAvailableEventIDs - query -> file: ${file}`)
+
+        if (!file) {
+            res.status(404).json({ message: `file URL parameter was not supplied (mandatory)` })
+            return
+        }
+
+        if (!fs.existsSync(file)) {
+            res.status(404).json({ message: `file '${file}' not found in server file system` })
+            return
+        }
+
+        console.log("calling 'getAvailableEventIDsFromFile'")
+        const response = await getAvailableEventIDsFromFile(file)
+
+        res.status(200).json(response)
+
+    } catch (error) {
+        console.error(`Failed to get event ids for file ${file}`)
+        console.error("getAvailableEventIDs", error.message)
         res.status(404).json({ message: error.message })
     }
 }

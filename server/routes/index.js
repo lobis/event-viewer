@@ -2,11 +2,12 @@ import express from "express"
 
 //
 
-import { getEvent } from "../controllers/index.js"
+import { getEvent, getAvailableEventIDs } from "../controllers/index.js"
 
 export const routerEvent = express.Router()
 
 routerEvent.get("/", getEvent)
+routerEvent.get("/list", getAvailableEventIDs)
 
 //
 
