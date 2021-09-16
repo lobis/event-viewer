@@ -15,7 +15,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useEffect } from "react"
 
-import { setEventIndex, navigateBeforeEvent, navigateNextEvent } from "../../actions/event.js"
+import { getAllEventIDs, setEventID, navigateBeforeEvent, navigateNextEvent } from "../../actions/event.js"
 
 import IconButton from '@material-ui/core/IconButton'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -30,25 +30,32 @@ const EventSelector = () => {
     const dispatch = useDispatch()
 
     const selectedFile = useSelector((state) => state.file.selectedFile)
-    useEffect(() => {
-        dispatch(setEventIndex(0))
-    }, [selectedFile])
-
-    const eventIndex = useSelector((state) => state.event.eventIndexSelected)
+    const eventIDs = useSelector((state) => state.event.eventIDs)
     const eventID = useSelector((state) => state.event.eventIDSelected)
+
+    useEffect(() => {
+        if (!selectedFile) { return }
+        dispatch(getAllEventIDs(selectedFile))
+    }, [dispatch, selectedFile])
+
+    useEffect(() => {
+        if (!eventIDs) { return }
+        dispatch(setEventID(eventIDs[0]))
+    }, [dispatch, eventIDs])
+
+
 
     return (
         <div className={classes.root}>
             <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}                >
-                    <Typography className={classes.heading}>Event Selector ID: {eventID} - {eventIndex}</Typography>
+                    <Typography className={classes.heading}>Event Selector ID: {eventID}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <IconButton edge="start" className={classes.menuButton}
                         onClick={() => { dispatch(navigateBeforeEvent()) }}>
                         <NavigateBeforeIcon />
                     </IconButton>
-                    <Typography className={classes.heading}>{eventIndex}</Typography>
                     <IconButton edge="end" className={classes.menuButton}
                         onClick={() => { dispatch(navigateNextEvent()) }}>
                         <NavigateNextIcon />

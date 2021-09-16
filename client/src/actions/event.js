@@ -3,18 +3,27 @@ import * as api from "../api"
 
 export const actionTypes = {
     GET_ALL_EVENT_IDS: "GET_ALL_EVENT_IDS",
-    SET_EVENT_INDEX: "SET_EVENT_INDEX",
     SET_EVENT_ID: "SET_EVENT_ID",
     NAVIGATE_NEXT_EVENT: "NAVIGATE_NEXT_EVENT",
     NAVIGATE_BEFORE_EVENT: "NAVIGATE_BEFORE_EVENT",
 }
 
-export const setEventIndex = (eventIndex) => async (dispatch) => {
-    console.log("actions/event/setEventIndex")
+export const getAllEventIDs = (file) => async (dispatch) => {
+    console.log("actions/event/getAllEventIDs")
     try {
-        dispatch({ type: actionTypes.SET_EVENT_INDEX, payload: eventIndex })
+        const { data } = await api.fetchListOfEventIDsForFile(file)
+        dispatch({ type: actionTypes.GET_ALL_EVENT_IDS, payload: data })
     } catch (error) {
-        console.error("actions/event/setEventIndex:", error.message)
+        console.error("actions/event/getAllEventIDs:", error.message)
+    }
+}
+
+export const setEventID = (eventID) => async (dispatch) => {
+    console.log("actions/event/setEventID")
+    try {
+        dispatch({ type: actionTypes.SET_EVENT_ID, payload: eventID })
+    } catch (error) {
+        console.error("actions/event/setEventID:", error.message)
     }
 }
 
