@@ -1,6 +1,7 @@
 import Background from "./Background"
 import Geometry from "./Geometry"
 import Interface from "./Interface"
+import Event from "./components/event/Event"
 
 import ReactDOM from "react-dom"
 
@@ -32,6 +33,7 @@ const App = () => {
                 <Background />
                 <Provider store={store}>
                     <Geometry />
+                    <Event />
                 </Provider>
             </Canvas>
         </>

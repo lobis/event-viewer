@@ -1,10 +1,11 @@
 import axios from "axios"
 import { actionTypes } from "../actions/event"
 
-const initialState = { eventIDSelected: null, eventIDs: [] }
+const initialState = { eventIDSelected: null, eventIDs: [], tracks: [] }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+
         case actionTypes.GET_ALL_EVENT_IDS: {
             const eventIDs = action.payload
             return {
@@ -12,13 +13,15 @@ const reducer = (state = initialState, action) => {
                 eventIDs
             }
         }
+
         case actionTypes.SET_EVENT_ID: {
             const eventIDSelected = action.payload
             return {
                 ...state,
-                eventIDSelected
+                eventIDSelected,
             }
         }
+
         case actionTypes.NAVIGATE_BEFORE_EVENT: {
             const index = state.eventIDs.indexOf(state.eventIDSelected)
             if (index > 0) {
@@ -29,9 +32,9 @@ const reducer = (state = initialState, action) => {
             }
             return state
         }
+
         case actionTypes.NAVIGATE_NEXT_EVENT: {
             const index = state.eventIDs.indexOf(state.eventIDSelected)
-            //console.log(index, state.eventIDSelected, state.eventIDs[index + 1], state.eventIDs)
             if (index !== -1 && index < state.eventIDs.length - 1) {
                 return {
                     ...state,
@@ -40,6 +43,14 @@ const reducer = (state = initialState, action) => {
             }
             return state
         }
+
+        case actionTypes.LOAD_TRACKS: {
+            return {
+                ...state,
+                tracks: action.payload,
+            }
+        }
+
         default:
             return state
     }

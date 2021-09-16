@@ -18,6 +18,8 @@ import CardContent from '@material-ui/core/CardContent';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        margin: theme.spacing(1),
+        maxWidth: 300,
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -41,7 +43,7 @@ const FileSelector = () => {
 
 
     return (
-        <Card>
+        <Card className={classes.root}>
             <CardContent>
 
                 <IconButton edge="start" className={classes.menuButton}

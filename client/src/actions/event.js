@@ -6,6 +6,7 @@ export const actionTypes = {
     SET_EVENT_ID: "SET_EVENT_ID",
     NAVIGATE_NEXT_EVENT: "NAVIGATE_NEXT_EVENT",
     NAVIGATE_BEFORE_EVENT: "NAVIGATE_BEFORE_EVENT",
+    LOAD_TRACKS: "LOAD_TRACKS",
 }
 
 export const getAllEventIDs = (file) => async (dispatch) => {
@@ -24,6 +25,16 @@ export const setEventID = (eventID) => async (dispatch) => {
         dispatch({ type: actionTypes.SET_EVENT_ID, payload: eventID })
     } catch (error) {
         console.error("actions/event/setEventID:", error.message)
+    }
+}
+
+export const loadTracks = (file, eventID) => async (dispatch) => {
+    console.log("actions/event/loadTracks")
+    try {
+        const { data } = await api.fetchEventByIDForFile(file, eventID)
+        dispatch({ type: actionTypes.LOAD_TRACKS, payload: data })
+    } catch (error) {
+        console.error("actions/event/loadTracks:", error.message)
     }
 }
 
