@@ -7,9 +7,10 @@ import { useSelector } from "react-redux"
 
 const Geometry = () => {
 
-    const file = useSelector((state) => state.file.selectedFile)
-
     const [model, setModel] = useState()
+
+    const file = useSelector((state) => state.file.selectedFile)
+    const globalTransparency = useSelector((state) => state.geometry.globalTransparency)
 
     const loadModel = async (file) => {
         if (!file) {
@@ -27,9 +28,24 @@ const Geometry = () => {
         })
     }
 
+    const setGlobalTransparency = (transparency) => {
+        if (model) {
+            model.traverse((node) => {
+                if (node.isMesh) {
+                    node.material.transparent = true
+                    node.material.opacity = 1 - transparency
+                }
+            })
+        }
+    }
+
     useEffect(() => {
         loadModel(file)
     }, [file])
+
+    useEffect(() => {
+        setGlobalTransparency(globalTransparency)
+    }, [globalTransparency, model])
 
     return model ? <primitive object={model} /> : null
 }
