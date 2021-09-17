@@ -1,6 +1,6 @@
 import { actionTypes } from "../actions/geometry"
 
-const initialState = { globalTransparency: 0.8, }
+const initialState = { globalTransparency: 0.8, enable: true}
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -11,6 +11,13 @@ const reducer = (state = initialState, action) => {
                 globalTransparency
             }
         }
+        case actionTypes.SET_ENABLE: {
+            const enable = action.payload
+            return {
+                ...state,
+                enable
+            }
+        }    
         default:
             return state
     }

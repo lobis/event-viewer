@@ -11,6 +11,7 @@ const Geometry = () => {
 
     const file = useSelector((state) => state.file.selectedFile)
     const globalTransparency = useSelector((state) => state.geometry.globalTransparency)
+    const enable = useSelector((state) => state.geometry.enable)
 
     const loadModel = async (file) => {
         if (!file) {
@@ -47,7 +48,7 @@ const Geometry = () => {
         setGlobalTransparency(globalTransparency)
     }, [globalTransparency, model])
 
-    return model ? <primitive object={model} /> : null
+    return model && enable ? <primitive object={model} /> : null
 }
 
 export default Geometry;

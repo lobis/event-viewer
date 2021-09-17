@@ -12,7 +12,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useEffect } from "react"
 
 import { getAllEventIDs, setEventID, navigateBeforeEvent, navigateNextEvent } from "../../actions/event.js"
-import { setGlobalTransparency } from "../../actions/geometry.js"
+import { setGlobalTransparency, setEnable } from "../../actions/geometry.js"
 
 import IconButton from '@material-ui/core/IconButton'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
@@ -24,6 +24,7 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import Grid from '@material-ui/core/Grid'
 import Slider from '@material-ui/core/Slider'
+import Checkbox from '@material-ui/core/Checkbox'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -42,6 +43,7 @@ const GeometrySettings = () => {
     const dispatch = useDispatch()
 
     const globalTransparency = useSelector((state) => state.geometry.globalTransparency)
+    const enable = useSelector((state) => state.geometry.enable)
 
     console.log("GLOBAL TRANSPARENCY:", globalTransparency)
 
@@ -54,7 +56,18 @@ const GeometrySettings = () => {
                 <AccordionDetails>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-
+                            <FormControl className={classes.formControl} >
+                                <Checkbox
+                                    value={enable}
+                                    onChange={
+                                        (event, newValue) => {
+                                            dispatch(setEnable(newValue))
+                                        }
+                                    } />
+                                <InputLabel>Enable</InputLabel>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
                             <Typography className={classes.heading}>Global Transparency: {globalTransparency}</Typography>
                         </Grid>
                         <Grid item xs={12}>

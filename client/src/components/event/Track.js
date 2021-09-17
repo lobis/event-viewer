@@ -52,12 +52,12 @@ const Track = ({ particleName, steps }) => {
     const color = getParticleColor(particleName)
 
     const getThickness = (energy) => {
-        let value = energy / 100000
-        if (value > 10) value = 10
-        return Math.max(value, 0.5)
+        let value = energy / 1000000
+        if (value > 10) value = 4
+        return Math.max(value, 0.25)
     }
 
-    const thickness = getThickness(steps[0].fTrackKineticEnergy)
+    const thickness = getThickness(steps[0].fKineticEnergy)
 
     return ((positions.length !== 0) ?
         <Line

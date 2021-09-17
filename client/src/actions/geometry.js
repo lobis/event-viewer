@@ -3,6 +3,7 @@ import * as api from "../api"
 
 export const actionTypes = {
     SET_GLOBAL_TRANSPARENCY: "SET_GLOBAL_TRANSPARENCY",
+    SET_ENABLE: "SET_ENABLE"
 }
 
 export const setGlobalTransparency = (transparency) => async (dispatch) => {
@@ -14,5 +15,15 @@ export const setGlobalTransparency = (transparency) => async (dispatch) => {
         dispatch({ type: actionTypes.SET_GLOBAL_TRANSPARENCY, payload: transparency })
     } catch (error) {
         console.error("actions/geometry/setGlobalTransparency:", error.message)
+    }
+}
+
+
+export const setEnable = (truth) => async (dispatch) => {
+    console.log("actions/geometry/setEnable")
+    try {
+        dispatch({ type: actionTypes.SET_ENABLE, payload: truth })
+    } catch (error) {
+        console.error("actions/geometry/setEnable:", error.message)
     }
 }

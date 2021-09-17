@@ -36,7 +36,7 @@ const processFile = async (filepath) => {
                                 "fZ": track.fSteps.fPosition[i].fZ,
                                 "fEnergy": track.fSteps.fEnergy[i],
                                 "fTimeGlobal": track.fSteps.fTimeGlobal[i],
-                                "fTrackKineticEnergy": track.fSteps.fTrackKineticEnergy[i],
+                                "fKineticEnergy": track.fSteps.fKineticEnergy[i],
                                 "fVolumeName": track.fSteps.fVolumeName[i],
                                 "fProcessName": track.fSteps.fProcessName[i],
                             })
