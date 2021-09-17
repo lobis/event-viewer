@@ -43,7 +43,7 @@ export const loadTracks = (file, eventID) => async (dispatch) => {
 }
 
 export const updateTimeSelection = (selection) => async (dispatch) => {
-    console.log("actions/event/updateTimeSelection")
+    // console.log("actions/event/updateTimeSelection")
     try {
         dispatch({ type: actionTypes.UPDATE_TIME_SELECTION, payload: selection })
     } catch (error) {

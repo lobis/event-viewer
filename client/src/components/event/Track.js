@@ -17,9 +17,35 @@ const Track = ({ particleName, steps }) => {
 
 
     const positions = []
-    steps.forEach(step => {
+    steps.forEach((step, index) => {
         if (step.fTimeGlobal >= timeGlobalSelectedRange[0] && step.fTimeGlobal <= timeGlobalSelectedRange[1]) {
             positions.push([step.fX, step.fY, step.fZ])
+        } else {
+            if (index === 0) { return }
+
+            const lastPosition = [steps[index - 1].fX, steps[index - 1].fY, steps[index - 1].fZ]
+            const stepPosition = [step.fX, step.fY, step.fZ]
+
+            const lastTime = steps[index - 1].fTimeGlobal
+            const stepTime = step.fTimeGlobal
+
+            const currentTime = timeGlobalSelectedRange[1]
+
+            if (stepTime - lastTime === 0 || currentTime <= lastTime) {
+                return
+            }
+
+
+            const interpolate = (x, y) => {
+                return x + (y - x) * (currentTime - lastTime) / (stepTime - lastTime)
+            }
+
+            positions.push([
+                interpolate(lastPosition[0], stepPosition[0]),
+                interpolate(lastPosition[1], stepPosition[1]),
+                interpolate(lastPosition[2], stepPosition[2])
+            ])
+
         }
     })
 

@@ -1,7 +1,7 @@
 import fs from "fs"
 import path from "path"
 
-const uploads = "server/uploads/"
+const uploads = process.env.UPLOADS || "./uploads/"
 
 const getFilePathInServer = (file) => {
     if (!file) return null
@@ -56,7 +56,7 @@ export const getEvent = async (req, res) => {
             res.status(404).json({ message: `event not found in '${file}'` })
             return
         }
-        
+
         res.status(200).json(response)
 
     } catch (error) {

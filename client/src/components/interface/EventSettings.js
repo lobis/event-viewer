@@ -61,7 +61,7 @@ const EventSettings = () => {
                             <Typography >To: {timeGlobalSelectedRange[1].toExponential().replace(/e\+?/, ' x 10^')} ns</Typography>
                             <Slider
                                 value={timeGlobalSelectedRange}
-                                min={timeGlobalTotalRange[0]} max={timeGlobalTotalRange[1]} step={(timeGlobalTotalRange[1] - timeGlobalTotalRange[0]) / 1E3}
+                                min={timeGlobalTotalRange[0]} max={timeGlobalTotalRange[1]} step={(timeGlobalTotalRange[1] - timeGlobalTotalRange[0]) / 1E5}
                                 onChange={(event, newValue) => {
                                     dispatch(updateTimeSelection(newValue))
                                 }}
@@ -77,18 +77,17 @@ const EventSettings = () => {
                                 onClick={async () => {
                                     if (!playing) {
                                         setPlaying(true)
-                                        const step = 1
+                                        const step = 0.1
                                         let time = 0
 
                                         function sleep(ms) {
                                             return new Promise(resolve => setTimeout(resolve, ms));
                                         }
 
-                                        while (time < 100) {
+                                        while (time < timeGlobalTotalRange[1]) {
                                             time += step
-                                            console.log(time)
                                             dispatch(updateTimeSelection([0, time]))
-                                            await sleep(30)
+                                            await sleep(10)
                                         }
                                         setPlaying(false)
                                     }

@@ -59,7 +59,7 @@ const reducer = (state = initialState, action) => {
                     }
                 })
             })
-            const timeGlobalTotalRange = [0, Math.min(timeGlobalMax, 10 * 1E2)]
+            const timeGlobalTotalRange = [0, Math.min(timeGlobalMax, 30 * 1E0)]
             return {
                 ...state,
                 tracks,
