@@ -19,4 +19,6 @@ RUN npm install && npm run build
 
 WORKDIR /app/server
 
+ENV UPLOADS=/app/server/uploads
+
 CMD ["node", "index.js"]
