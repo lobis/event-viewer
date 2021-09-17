@@ -7,6 +7,7 @@ export const actionTypes = {
     NAVIGATE_NEXT_EVENT: "NAVIGATE_NEXT_EVENT",
     NAVIGATE_BEFORE_EVENT: "NAVIGATE_BEFORE_EVENT",
     LOAD_TRACKS: "LOAD_TRACKS",
+    UPDATE_TIME_SELECTION: "UPDATE_TIME_SELECTION",
 }
 
 export const getAllEventIDs = (file) => async (dispatch) => {
@@ -31,10 +32,22 @@ export const setEventID = (eventID) => async (dispatch) => {
 export const loadTracks = (file, eventID) => async (dispatch) => {
     console.log("actions/event/loadTracks")
     try {
+        if (!file || !eventID) {
+            dispatch({ type: actionTypes.LOAD_TRACKS, payload: [] })
+        }
         const { data } = await api.fetchEventByIDForFile(file, eventID)
         dispatch({ type: actionTypes.LOAD_TRACKS, payload: data })
     } catch (error) {
         console.error("actions/event/loadTracks:", error.message)
+    }
+}
+
+export const updateTimeSelection = (selection) => async (dispatch) => {
+    console.log("actions/event/updateTimeSelection")
+    try {
+        dispatch({ type: actionTypes.UPDATE_TIME_SELECTION, payload: selection })
+    } catch (error) {
+        console.error("actions/event/updateTimeSelection:", error.message)
     }
 }
 

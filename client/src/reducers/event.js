@@ -1,9 +1,13 @@
 import axios from "axios"
 import { actionTypes } from "../actions/event"
 
-const initialState = { eventIDSelected: null, eventIDs: [], tracks: [] }
+const initialState = {
+    eventIDSelected: null, eventIDs: [], tracks: [],
+    timeGlobalTotalRange: [0, 0], timeGlobalSelectedRange: [0, 0]
+}
 
 const reducer = (state = initialState, action) => {
+
     switch (action.type) {
 
         case actionTypes.GET_ALL_EVENT_IDS: {
@@ -45,9 +49,34 @@ const reducer = (state = initialState, action) => {
         }
 
         case actionTypes.LOAD_TRACKS: {
+
+            const tracks = action.payload
+            let timeGlobalMax = 0
+            tracks.forEach(track => {
+                track.fSteps.forEach(step => {
+                    if (step.fTimeGlobal > timeGlobalMax) {
+                        timeGlobalMax = step.fTimeGlobal
+                    }
+                })
+            })
+            const timeGlobalTotalRange = [0, Math.min(timeGlobalMax, 10 * 1E2)]
             return {
                 ...state,
-                tracks: action.payload,
+                tracks,
+                timeGlobalTotalRange,
+                timeGlobalSelectedRange: timeGlobalTotalRange
+            }
+        }
+
+        case actionTypes.UPDATE_TIME_SELECTION: {
+            const selection = action.payload
+
+            if (selection[0] < state.timeGlobalTotalRange[0]) { selection[0] = state.timeGlobalTotalRange[0] }
+            if (selection[1] > state.timeGlobalTotalRange[1]) { selection[1] = state.timeGlobalTotalRange[1] }
+
+            return {
+                ...state,
+                timeGlobalSelectedRange: selection
             }
         }
 

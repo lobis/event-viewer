@@ -44,7 +44,10 @@ const EventSelector = () => {
     const eventID = useSelector((state) => state.event.eventIDSelected)
 
     useEffect(() => {
-        if (!selectedFile) { return }
+        dispatch(setEventID(null))
+        if (!selectedFile) {
+            return
+        }
         dispatch(getAllEventIDs(selectedFile))
     }, [dispatch, selectedFile])
 

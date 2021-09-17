@@ -13,9 +13,8 @@ const Event = () => {
     const tracks = useSelector((state) => state.event.tracks)
 
     useEffect(() => {
-        if (!selectedFile || !eventID) { return }
         dispatch(loadTracks(selectedFile, eventID))
-    }, [dispatch, eventID, selectedFile])
+    }, [dispatch, eventID])
 
 
     return (
