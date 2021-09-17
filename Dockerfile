@@ -1,6 +1,6 @@
 FROM node:latest
 
-ENV UPLOADS=/app/server/uploads
+ENV UPLOADS=/app/server/uploads/
 ENV REACT_APP_HOST=155.210.94.111
 ENV REACT_APP_PORT=8888
 
